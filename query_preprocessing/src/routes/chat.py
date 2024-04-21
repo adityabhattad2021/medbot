@@ -7,7 +7,6 @@ from ..query_manager import get_response
 from ..types import (
     ApiQuery,
     QaQuery,
-    QaResponse,
     Message,
     MessageRole,
     ChatThread,
@@ -19,9 +18,6 @@ import asyncio
 router = APIRouter()
 
 async def generator(response):
-    print("*"*100)
-    print(response)
-    print("*"*100)
     for chunk in response.split():
         yield f"{chunk} "
         await asyncio.sleep(0.1)
@@ -42,7 +38,7 @@ async def get_ai_message(
     try:
         summarizer = SummaryProompter()
         chat_history = chat_manager.get_chat(query.thread_id)
-        summary = summarizer.get_summary(chat_history,qa_query.model)
+        summary = summarizer.get_summary(chat_history,query.model)
 
         qa_query = QaQuery(**(query.dict() | {"summary": summary}))
         response = get_response(qa_query)

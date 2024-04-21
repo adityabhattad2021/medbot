@@ -26,20 +26,17 @@ class Model(str, enum.Enum):
     # - [GroqCloud](https://console.groq.com/docs/models)
     groq_mistral_8x7b = "groq-mistral-8x7b"
     groq_llama2_70b = "groq-llama2-70b"
+    groq_llama3_70b = "groq-llama3-70b"
     groq_gemma_7b = "groq-gemma-7b"
 
     def model(self):
         match self:
-            case Model.gemini_pro_chat | Model.gemini_pro:
-                return "gemini-pro"
-            case Model.ollama_llama2:
-                return "llama2"
-            case Model.ollama_llama2_uncensored:
-                return "llama2-uncensored"
             case Model.groq_gemma_7b:
                 return "gemma-7b-it"
             case Model.groq_llama2_70b:
                 return "llama2-70b-4096"
+            case Model.groq_llama3_70b:
+                return "llama3-70b-8192"
             case Model.groq_mistral_8x7b:
                 return "mixtral-8x7b-32768"
             case Model.claude_3_opus:
@@ -66,7 +63,6 @@ class EmbeddingsModel(str, enum.Enum):
 class Strategy(str, enum.Enum):
     medical_database = "medical-database"
     pubmed_search = "pubmed-search"
-    web_search = "web-search"
     web_search_api = "web-search-api"
 
 class Query(pydantic.BaseModel):

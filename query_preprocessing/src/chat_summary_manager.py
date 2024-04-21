@@ -1,25 +1,16 @@
-import google.generativeai as genai
-from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
+from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.runnables import RunnableLambda
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from .create_llm import CreateLLM
-from dotenv import find_dotenv, load_dotenv
+from .types import (
+    Model,
+    Message,
+    MessageRole,
+)
 from typing import List
-
-import os
-import pprint
-
-from .types import Message, MessageRole
 from .proompts import summarization_prompt_template
 from .proompter import printer, Proompter
-
-# set_debug(True)
-
-load_dotenv(find_dotenv())
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-
 
 class SummaryProompter(Proompter):
     def summary_chain(self, llm):
@@ -56,8 +47,9 @@ class SummaryProompter(Proompter):
 
         return RunnableLambda(get_summary)
 
-    def get_summary(self,history: List[Message],query) -> str:
-        llm = CreateLLM.getModel(query.model)
+    def get_summary(self,history: List[Message],model:Model) -> str:
+        
+        llm = CreateLLM.getModel(model)
         chain = self.summary_chain(llm)
         return chain.invoke({"history": history})
 

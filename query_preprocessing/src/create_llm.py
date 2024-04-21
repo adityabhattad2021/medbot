@@ -18,24 +18,7 @@ class CreateLLM:
     @staticmethod
     def getModel(model: Model, temp=0):
         match model:
-            case Model.gemini_pro:
-                llm = GoogleGenerativeAI(
-                    model=model.model(), google_api_key=os.getenv("GOOGLE_API_KEY")
-                )
-            case Model.gemini_pro_chat:
-                llm = ChatGoogleGenerativeAI(
-                    model=model.model(),
-                    temperature=temp,
-                    convert_system_message_to_human=True,
-                    google_api_key=os.getenv("GOOGLE_API_KEY"),
-                )
-            case Model.ollama_llama2 | Model.ollama_llama2_uncensored:
-                llm = Ollama(
-                    base_url=os.getenv("OLLAMA_URL"),
-                    model=model.model() + ":vram-34",
-                    temperature=temp,
-                )
-            case Model.groq_mistral_8x7b | Model.groq_llama2_70b | Model.groq_gemma_7b:
+            case Model.groq_mistral_8x7b | Model.groq_llama2_70b | Model.groq_gemma_7b | Model.groq_llama3_70b:
                 llm = ChatGroq(
                     model_name=model.model(),
                     temperature=temp,
