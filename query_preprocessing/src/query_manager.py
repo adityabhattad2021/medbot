@@ -153,9 +153,8 @@ class TavilyQaService(Proompter):
 
 @lru_cache
 def get_response(query: QaQuery) -> str:
-    create_llm = CreateLLM(query.model, query.embeddings_model)
-    llm = create_llm.getModel()
-    embeddings = create_llm.get_embeddings()
+    llm = CreateLLM.getModel(query.model)
+    embeddings = CreateLLM.get_embeddings(query.embeddings_model)
 
     match query.strategy:
         case Strategy.medical_database:

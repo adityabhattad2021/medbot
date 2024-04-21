@@ -4,6 +4,7 @@ from langchain_core.runnables import RunnableLambda
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from .create_llm import CreateLLM
 from dotenv import find_dotenv, load_dotenv
 from typing import List
 
@@ -55,7 +56,8 @@ class SummaryProompter(Proompter):
 
         return RunnableLambda(get_summary)
 
-    def get_summary(self, llm, history: List[Message]) -> str:
+    def get_summary(self,history: List[Message],query) -> str:
+        llm = CreateLLM.getModel(query.model)
         chain = self.summary_chain(llm)
         return chain.invoke({"history": history})
 
