@@ -3,6 +3,7 @@ from fastapi.responses import StreamingResponse
 from ..security import get_current_user, UserBase
 import requests
 from ..guard_rails import RelevenceProompter
+from ..query_manager import get_response
 from ..types import (
     ApiQuery,
     QaQuery,
@@ -18,8 +19,11 @@ import asyncio
 
 router = APIRouter()
 
-async def generator(resp):
-    for chunk in resp.response.split():
+async def generator(response):
+    print("*"*100)
+    print(response)
+    print("*"*100)
+    for chunk in response.split():
         yield f"{chunk} "
         await asyncio.sleep(0.1)
 
@@ -62,21 +66,15 @@ async def get_ai_message(
 
             return StreamingResponse(generator(resp), media_type="text/event-stream")
 
-        response = requests.post(
-            "http://qa-service:8000/get-ai-response", json=qa_query.dict()
-        )
-        response.raise_for_status()
-        response = response.json()
-        response = QaResponse(**response)
+        response = get_response(qa_query)
     except requests.exceptions.RequestException as e:
-        # return QaResponse(**{"type": QaResponse.Type.ERROR, "response": e})
         raise HTTPException(status_code=418, detail=str(e))
     else:
         chat_manager.add_message(
             query.thread_id,
-            Message(role=MessageRole.assistant, content=response.response),
+            Message(role=MessageRole.assistant, content=response["response"]),
         )
-        return StreamingResponse(generator(response), media_type="text/event-stream")
+        return StreamingResponse(generator(response['response']), media_type="text/event-stream")
 
 
 

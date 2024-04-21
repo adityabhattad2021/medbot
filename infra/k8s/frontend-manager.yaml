@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: adnantd/frontend
+          image: adityabhattad/frontend
           # resources:
           #   limits:
           #     memory: "500Mi"

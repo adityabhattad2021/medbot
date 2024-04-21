@@ -23,7 +23,7 @@ spec:
             ]
       containers:
         - name: auth
-          image: adnantd/auth
+          image: adityabhattad/auth
           resources:
             limits:
               memory: '500Mi'

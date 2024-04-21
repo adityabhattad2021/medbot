@@ -155,7 +155,7 @@ To set up and run this project locally, follow these steps:
      ```
    - Replace `my docker hub id` with your Docker Hub ID in `skaffold.yaml`, `query-preprocessing-manager.yaml`, `question_answer_manager.yaml`, and `rag_uploader_manager.yaml`. For example:
      ```yaml
-     adnantd/query-preprocessing => <your-name>/query-processing
+     adityabhattad/query-preprocessing => <your-name>/query-processing
      ```
 
 **Linux**

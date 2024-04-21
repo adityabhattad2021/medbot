@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rag-uploader
-          image: adnantd/rag-uploader
+          image: adityabhattad/rag-uploader
           # resources:
           #   limits:
           #     memory: "128Mi"
