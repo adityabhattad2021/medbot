@@ -15,7 +15,7 @@ from typing import List
 from functools import lru_cache
 from dotenv import find_dotenv, load_dotenv
 from .types import Model, QaQuery, Strategy, EmbeddingsModel
-from .create_llm import CreateLLM
+from .llm_manager import LlmManager
 from .proompter import Proompter, printer
 from .proompts import pubmed_query_prompt_template
 
@@ -153,8 +153,8 @@ class TavilyQaService(Proompter):
 
 @lru_cache
 def get_response(query: QaQuery) -> str:
-    llm = CreateLLM.getModel(query.model)
-    embeddings = CreateLLM.get_embeddings(query.embeddings_model)
+    llm = LlmManager.getModel(query.model)
+    embeddings = LlmManager.get_embeddings(query.embeddings_model)
 
     match query.strategy:
         case Strategy.medical_database:

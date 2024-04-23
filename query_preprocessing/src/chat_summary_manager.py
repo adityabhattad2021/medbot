@@ -2,7 +2,7 @@ from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.runnables import RunnableLambda
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from .create_llm import CreateLLM
+from .llm_manager import LlmManager
 from .types import (
     Model,
     Message,
@@ -49,7 +49,7 @@ class SummaryProompter(Proompter):
 
     def get_summary(self,history: List[Message],model:Model) -> str:
         
-        llm = CreateLLM.getModel(model)
+        llm = LlmManager.getModel(model)
         chain = self.summary_chain(llm)
         return chain.invoke({"history": history})
 

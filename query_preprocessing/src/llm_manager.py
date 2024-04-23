@@ -1,10 +1,7 @@
-from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAI
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.embeddings import OllamaEmbeddings
 import os
 from dotenv import load_dotenv, find_dotenv
-from langchain_community.llms import Ollama
-
 from langchain_groq import ChatGroq
 from langchain_anthropic import ChatAnthropic
 
@@ -13,7 +10,7 @@ from .types import Model, EmbeddingsModel
 load_dotenv(find_dotenv())
 
 
-class CreateLLM:
+class LlmManager:
  
     @staticmethod
     def getModel(model: Model, temp=0):

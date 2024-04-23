@@ -6,7 +6,7 @@ import json
 from dotenv import load_dotenv, find_dotenv
 import pprint
 
-from .create_llm import CreateLLM
+from .llm_manager import LlmManager
 from .types import Model, QaQuery, RelevanceResponse
 from .proompter import printer, Proompter
 from .proompts import guard_prompt_template, guard_prompt2_template
