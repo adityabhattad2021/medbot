@@ -87,9 +87,9 @@ export default function LoginForm() {
         <CardWrapper
             headerLabel="Sign In"
             showSocial
-            redirectUrl="/auth/sign-in"
+            redirectUrl="/auth/sign-up"
             redirectDescription="Don't have an account?"
-            redirectLabel="Sign Up"
+            redirectLabel="Sign up"
         >
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleOnSubmit)} className="space-y-8 w-full">
