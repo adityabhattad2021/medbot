@@ -24,6 +24,7 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
+import { CardWrapper } from "./card-wrapper";
 
 
 const formSchema = z.object({
@@ -83,16 +84,13 @@ export default function LoginForm() {
     }
 
     return (
-        <Card className="sm:w-[35%] w-[90%]">
-            <CardHeader>
-                <CardTitle>
-                    Sign In
-                </CardTitle>
-                <CardDescription>
-                    Sign in to the application
-                </CardDescription>
-            </CardHeader>
-            <CardContent>
+        <CardWrapper
+            headerLabel="Sign In"
+            showSocial
+            redirectUrl="/auth/sign-in"
+            redirectDescription="Don't have an account?"
+            redirectLabel="Sign Up"
+        >
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleOnSubmit)} className="space-y-8 w-full">
                         <FormField
@@ -140,23 +138,7 @@ export default function LoginForm() {
                         </div>
                     </form>
                 </Form>
-            </CardContent>
-            <CardFooter className="flex flex-col">
-                <CardDescription>
-                    Don't have an account?
-                </CardDescription>
-                <Button
-                    variant={"link"}
-                    className="font-normal w-full"
-                    size={"sm"}
-                    asChild
-                >
-                    <Link href="/auth/sign-up">
-                        Sign Up
-                    </Link>
-                </Button>
-            </CardFooter>
-        </Card>
+           </CardWrapper>
     )
 }
 
