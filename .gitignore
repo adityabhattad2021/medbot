@@ -6,3 +6,4 @@ secrets.yaml
 skaffold
 !skaffold.yaml
 .direnv
+requirements.in
