@@ -7,11 +7,17 @@
 annotated-types==0.6.0
     # via pydantic
 anyio==4.3.0
-    # via starlette
+    # via
+    #   httpx
+    #   starlette
 authlib==1.3.0
     # via -r requirements.in
 bcrypt==4.1.2
     # via -r requirements.in
+certifi==2024.2.2
+    # via
+    #   httpcore
+    #   httpx
 cffi==1.16.0
     # via cryptography
 click==8.1.7
@@ -27,9 +33,19 @@ fastapi==0.110.2
 greenlet==3.0.3
     # via sqlalchemy
 h11==0.14.0
-    # via uvicorn
+    # via
+    #   httpcore
+    #   uvicorn
+httpcore==1.0.5
+    # via httpx
+httpx==0.27.0
+    # via -r requirements.in
 idna==3.7
-    # via anyio
+    # via
+    #   anyio
+    #   httpx
+itsdangerous==2.2.0
+    # via -r requirements.in
 passlib==1.7.4
     # via -r requirements.in
 psycopg2-binary==2.9.9
@@ -57,7 +73,9 @@ rsa==4.9
 six==1.16.0
     # via ecdsa
 sniffio==1.3.1
-    # via anyio
+    # via
+    #   anyio
+    #   httpx
 sqlalchemy==2.0.29
     # via -r requirements.in
 starlette==0.37.2
