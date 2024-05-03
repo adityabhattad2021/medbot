@@ -1,7 +1,8 @@
-from fastapi import APIRouter,Request
+from fastapi import APIRouter
+from starlette.requests import Request
 from dotenv import load_dotenv
 from starlette.config import Config
-from starlette.responses import RedirectResponse,HTMLResponse
+from starlette.responses import JSONResponse,HTMLResponse
 from authlib.integrations.starlette_client import OAuth,OAuthError
 import os
 
@@ -22,25 +23,28 @@ oauth = OAuth(starlette_config)
 oauth.register(
     name="google",
     server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
-    client_kwargs={"scope": "openid profile email"},
+    client_kwargs={'scope': 'openid email profile'},
 )
 
 
 
 
-@router.route('/login-with-google')
+@router.get('/login-with-google')
 async def login(request:Request):
-    redirect_uri = request.url_for('google-callback')
-    return await oauth.google.authorize_redirect(request, redirect_uri)
+    redirect_uri = request.url_for('callback')
+    authorization_url= await oauth.google.authorize_redirect(request, redirect_uri)
+    return authorization_url
 
-@router.route("/google-callback",name='google-callback')
+@router.get("/google-callback",name='callback')
 async def callback(request:Request):
     try:
         token = await oauth.google.authorize_access_token(request)
-    except OAuthError as error:
-        return HTMLResponse(f'<h1>{error.error} afas</h1>')
-    user = token.get('userinfo')
+        print("Token: ",token)
+        user = token['userinfo']
+    except Exception as error:
+        print("Error: ",error.error)
+        return JSONResponse({"working":"false"})
     if user:
         print(user)
-        return {"working":"true"}
-    return {"working":"false"}
+        return JSONResponse({"working":"true"})
+    return JSONResponse({"working":"false"})
